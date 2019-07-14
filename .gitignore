@@ -1,3 +1,6 @@
+#in use files
+*.swp
+
 # Prerequisites
 *.d
 

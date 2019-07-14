@@ -23,39 +23,32 @@ int main() {
 
 	printf("----------------- Testing Card: %s ----------------\n", TESTCARD);
   // ----------- TEST 1: numActions + 2 --------------
-	printf("TEST 1: numAction +2 \n");
+	printf("TEST 1: numActions + 2 \n");
 
 	memcpy(&state, &originalState, sizeof(struct gameState));
-	choice1 = 1;
-  playMinion(&state, currentPlayer, choice1, choice2, handPos);
-
-  assertEqual(originalState.numActions + 1, state.numActions);
-
-  // ----------- TEST 2: numActions + 2 --------------
-	printf("TEST 2: choice 1 coins+2 \n");
-
-	memcpy(&state, &originalState, sizeof(struct gameState));
-	choice1 = 1;
-  playMinion(&state, currentPlayer, choice1, choice2, handPos);
-
-  assertEqual(originalState.coins + 2, state.coins);
-  printf("\n >>>>> Unit Test 1 SUCCESS: Testing complete %s <<<<<\n\n", TESTCARD);
-
-  // ----------- TEST 3: numActions + 2 --------------
-	printf("TEST 2: choice 2 coins+2 \n");
-
-	memcpy(&state, &originalState, sizeof(struct gameState));
-  int i=0;
-	choice1 = 0;
+	choice1 = 2;
 	choice2 = 1;
-  drawCard(0, &state);
-  for(; i < 6; i++)
-    drawCard(1, &state);
-  playMinion(&state, currentPlayer, choice1, choice2, handPos);
+  playAmbassador(&state, currentPlayer, choice1, choice2, handPos);
 
-  assertEqual(state.handCount[0], 4);
-  assertEqual(state.handCount[1], 4);
-  printf("\n >>>>> Unit Test 1 SUCCESS: Testing complete %s <<<<<\n\n", TESTCARD);
+  assertEqual(originalState.supplyCount[originalState.hand[currentPlayer][choice1]] + choice2, state.supplyCount[state.hand[currentPlayer][choice1]]);
+
+  // ----------- TEST 2: choice2 less than 0 returns error  --------------
+	printf("TEST 2: Choice 2 less than 0 returns error \n");
+
+	memcpy(&state, &originalState, sizeof(struct gameState));
+	choice2 = -3;
+  int val = playAmbassador(&state, currentPlayer, choice1, choice2, handPos);
+
+  assertEqual(val, -1);
+
+  // ----------- TEST 2: choice2 larger than 2 returns error  --------------
+	printf("TEST 2: Choice 2 greater than 2 returns error \n");
+
+	memcpy(&state, &originalState, sizeof(struct gameState));
+	choice2 = 3;
+  val = playAmbassador(&state, currentPlayer, choice1, choice2, handPos);
+
+  assertEqual(val, -1);
 
   return 0;
 }

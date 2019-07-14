@@ -40,7 +40,6 @@ int main() {
   playMinion(&state, currentPlayer, choice1, choice2, handPos);
 
   assertEqual(originalState.coins + 2, state.coins);
-  printf("\n >>>>> Unit Test 1 SUCCESS: Testing complete %s <<<<<\n\n", TESTCARD);
 
   // ----------- TEST 3: numActions + 2 --------------
 	printf("TEST 2: choice 2 coins+2 \n");
