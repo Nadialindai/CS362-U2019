@@ -6,13 +6,14 @@
 #include "rngs.h"
 #include <stdlib.h>
 
-#define TESTCARD "getWinners"
+#define TESTCARD "drawCard"
 void assertEqual(int, int);
 
 int main() {
   int seed = 1234;
   int val;
-  int players[4] = {3, 4, 6, 5};
+  int nextPlayer = 1;
+  int i = 1;
   int numPlayers = 4;
 	struct gameState state, originalState;
 	int k[10] = {adventurer, embargo, village, minion, mine, cutpurse,
@@ -24,39 +25,32 @@ int main() {
 
 	printf("----------------- Testing Card: %s ----------------\n", TESTCARD);
   // ----------- TEST 1: --------------
-	printf("TEST 1: Correctly gets single winner\n");
+	printf("TEST 1: Correctly gets next card\n");
 	memcpy(&state, &originalState, sizeof(struct gameState));
-  val = getWinners(players, &state);
+  for(; i<=10; i++){
+    drawCard(nextPlayer, &state);
+    assertEqual(originalState.deckCount[nextPlayer]-i, state.deckCount[nextPlayer]);
+    assertEqual(i, state.handCount[nextPlayer]);
+  }
 
-  assertEqual(players[0], 0);
-  assertEqual(players[1], 0);
-  assertEqual(players[2], 1);
-  assertEqual(players[3], 0);
+  i = 1;
+  for(; i<=10; i++){
+    discardCard(0, nextPlayer, &state, 0);
+  }
+  val = drawCard(nextPlayer, &state);
+  assertEqual(0, state.discardCount[nextPlayer]);
+  assertEqual(originalState.deckCount[nextPlayer]-1, state.deckCount[nextPlayer]);
+  assertEqual(1, state.handCount[nextPlayer]);
   assertEqual(val, 0);
 
   // ----------- TEST 2: --------------
-	printf("TEST 1: Correctly gets two winners\n");
+	printf("TEST 1: errors when no cards in deck or discard\n");
 	memcpy(&state, &originalState, sizeof(struct gameState));
-  players[1] = 6;
-  val = getWinners(players, &state);
+  state.deckCount[nextPlayer] = 0;
+  state.discardCount[nextPlayer] = 0;
+  val = drawCard(nextPlayer, &state);
+  assertEqual(val, -1);
 
-  assertEqual(players[0], 0);
-  assertEqual(players[1], 1);
-  assertEqual(players[2], 1);
-  assertEqual(players[3], 0);
-  assertEqual(val, 0);
-
-  // ----------- TEST 3: --------------
-	printf("TEST 3: adjusts scores based on turn\n");
-	memcpy(&state, &originalState, sizeof(struct gameState));
-  state.whoseTurn = 1;
-  val = getWinners(players, &state);
-
-  assertEqual(players[0], 0);
-  assertEqual(players[1], 0);
-  assertEqual(players[2], 1);
-  assertEqual(players[3], 0);
-  assertEqual(val, 0);
   return 0;
 }
 

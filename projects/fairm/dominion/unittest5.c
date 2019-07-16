@@ -6,7 +6,7 @@
 #include "rngs.h"
 #include <stdlib.h>
 
-#define TESTCARD "Baron"
+#define METHOD "playBaron"
 void assertNotEqual(int, int);
 void assertEqual(int, int);
 
@@ -22,7 +22,7 @@ int main() {
 	// initialize a game state and player cards
 	initializeGame(numPlayers, k, seed, &originalState);
 
-	printf("----------------- Testing Card: %s ----------------\n", TESTCARD);
+	printf("----------------- Testing Method: %s ----------------\n", METHOD);
   // ----------- TEST 1: Choose to discard draws an estate card --------------
 	printf("TEST 1: Choose to discard draws an estate card\n");
 

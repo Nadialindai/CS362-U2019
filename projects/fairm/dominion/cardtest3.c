@@ -53,6 +53,3 @@ void assertEqual(int a, int b){
   else
     printf("\n >>>>> Failure: %d != %d <<<<<\n\n", a, b);
 }
-
-
-
