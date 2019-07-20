@@ -78,6 +78,21 @@ int main() {
     }
   }
 
+    // ----------- TEST 3: --------------
+	printf("TEST 3: negative number of players \n");
+  numPlayers = -1;
+	int val = initializeGame(numPlayers, k, seed, &state);
+  assertEqual(val, -1);
+
+  printf("TEST 4: Too many players\n");
+  numPlayers = 5;
+	val = initializeGame(numPlayers, k, seed, &state);
+  assertEqual(val, -1);
+
+  printf("TEST 5: Max players\n");
+  numPlayers = 4;
+	val = initializeGame(numPlayers, k, seed, &state);
+  assertEqual(val, 0);
   return 0;
 }
 

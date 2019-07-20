@@ -1,6 +1,6 @@
 #in use files
 *.swp
-
+*.DS_Store
 # Prerequisites
 *.d
 

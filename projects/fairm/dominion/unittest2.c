@@ -49,7 +49,7 @@ int main() {
   val = playAmbassador(&state, currentPlayer, choice1, choice2, handPos);
 
   assertEqual(val, -1);
-
+  printf("\n >>>>> Unit Test 2 SUCCESS: Testing complete %s <<<<<\n\n", TESTCARD);
   return 0;
 }
 

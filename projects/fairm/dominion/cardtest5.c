@@ -14,11 +14,10 @@ int main() {
   int val;
   int nextPlayer = 1;
   int i = 1;
-  int numPlayers = 4;
+  int numPlayers = 2;
 	struct gameState state, originalState;
 	int k[10] = {adventurer, embargo, village, minion, mine, cutpurse,
 			sea_hag, tribute, smithy, council_room};
-  numPlayers = 2;
 	initializeGame(numPlayers, k, seed, &originalState);
 
 	// initialize a game state and player cards
@@ -30,11 +29,12 @@ int main() {
   for(; i<=10; i++){
     drawCard(nextPlayer, &state);
     assertEqual(originalState.deckCount[nextPlayer]-i, state.deckCount[nextPlayer]);
+    assertEqual(originalState.deck[nextPlayer][10-i], state.hand[nextPlayer][i-1]);
     assertEqual(i, state.handCount[nextPlayer]);
   }
 
-  i = 1;
-  for(; i<=10; i++){
+  i = 0;
+  for(; i < state.handCount[nextPlayer]; i++){
     discardCard(0, nextPlayer, &state, 0);
   }
   val = drawCard(nextPlayer, &state);
@@ -44,7 +44,7 @@ int main() {
   assertEqual(val, 0);
 
   // ----------- TEST 2: --------------
-	printf("TEST 1: errors when no cards in deck or discard\n");
+	printf("TEST 2: errors when no cards in deck or discard\n");
 	memcpy(&state, &originalState, sizeof(struct gameState));
   state.deckCount[nextPlayer] = 0;
   state.discardCount[nextPlayer] = 0;

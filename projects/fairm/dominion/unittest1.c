@@ -14,6 +14,7 @@ int main() {
   int seed = 1234;
   int numPlayers = 2;
   int currentPlayer = 0;
+  int nextPlayer = 1;
 	struct gameState state, originalState;
 	int k[10] = {adventurer, embargo, village, minion, mine, cutpurse,
 			sea_hag, tribute, smithy, council_room};
@@ -22,7 +23,7 @@ int main() {
 	initializeGame(numPlayers, k, seed, &originalState);
 
 	printf("----------------- Testing Card: %s ----------------\n", TESTCARD);
-  // ----------- TEST 1: numActions + 2 --------------
+  // ----------- TEST 1: choice1--------------
 	printf("TEST 1: numAction +2 \n");
 
 	memcpy(&state, &originalState, sizeof(struct gameState));
@@ -30,18 +31,10 @@ int main() {
   playMinion(&state, currentPlayer, choice1, choice2, handPos);
 
   assertEqual(originalState.numActions + 1, state.numActions);
-
-  // ----------- TEST 2: numActions + 2 --------------
-	printf("TEST 2: choice 1 coins+2 \n");
-
-	memcpy(&state, &originalState, sizeof(struct gameState));
-	choice1 = 1;
-  playMinion(&state, currentPlayer, choice1, choice2, handPos);
-
   assertEqual(originalState.coins + 2, state.coins);
 
-  // ----------- TEST 3: numActions + 2 --------------
-	printf("TEST 2: choice 2 coins+2 \n");
+  // ----------- TEST 2: choice 2 --------------
+	printf("TEST 2: choice 2  \n");
 
 	memcpy(&state, &originalState, sizeof(struct gameState));
   int i=0;
@@ -49,7 +42,7 @@ int main() {
 	choice2 = 1;
   drawCard(0, &state);
   for(; i < 6; i++)
-    drawCard(1, &state);
+    drawCard(nextPlayer, &state);
   playMinion(&state, currentPlayer, choice1, choice2, handPos);
 
   assertEqual(state.handCount[0], 4);

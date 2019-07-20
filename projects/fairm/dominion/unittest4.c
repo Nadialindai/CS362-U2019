@@ -50,12 +50,13 @@ int main() {
   handPos = choice1-1;
   state.hand[currentPlayer][choice1] = 5;
   state.hand[currentPlayer][handPos] = 11;
-  playMine(&state, currentPlayer, choice1, choice2, handPos);
+  int val2 = playMine(&state, currentPlayer, choice1, choice2, handPos);
   for (; i < state.handCount[currentPlayer]; i++) {
     if(state.hand[currentPlayer][i] == 6)
         val = 1;
   }
   assertEqual(val, 1);
+  assertEqual(val2, 0);
   // ----------- TEST 3: Mine Non mineral fails --------------
 	printf("TEST 3: mining non mineral returns error\n");
 
@@ -77,12 +78,12 @@ int main() {
 	memcpy(&state, &originalState, sizeof(struct gameState));
   choice1 = 3;
   choice2 = 6;
-  handPos = choice1-1;
+  handPos = choice1;
   state.hand[currentPlayer][choice1] = 4;
   state.hand[currentPlayer][handPos] = 11;
   val = playMine(&state, currentPlayer, choice1, choice2, handPos);
   assertEqual(val, -1);
-
+  printf("\n >>>>> Unit Test 4 SUCCESS: Testing complete %s <<<<<\n\n", TESTCARD);
   return 0;
 }
 

@@ -43,13 +43,8 @@ int main() {
     if(state.deck[currentPlayer][i] != originalState.deck[currentPlayer][i])
       val = 1;
   }
-
-  printf("handcount is %d\n", state.handCount[currentPlayer]);
-  printf("deck count is %d\n", state.deckCount[currentPlayer]);
-  printf("discard count is %d\n", state.discardCount[currentPlayer]);
+  assertEqual(state.deckCount[currentPlayer], originalState.deckCount[currentPlayer]);
   assertEqual(val, 1);
-
-
 
   return 0;
 }

@@ -47,14 +47,12 @@ int main() {
     discardCard(0, nextPlayer, &state, 0);
   }
 
-  state.deck[nextPlayer][state.deckCount[nextPlayer]-1] = 6; // great hall
+  state.deck[nextPlayer][state.deckCount[nextPlayer]-1] = 16; // great hall
   playTribute(&state, currentPlayer, nextPlayer, tributeRevealedCards);
   assertNotEqual(-1, tributeRevealedCards[0]);
   assertEqual(-1, tributeRevealedCards[1]);
   assertEqual(originalState.numActions + 2, state.numActions); 
-  assertEqual(originalState.coins + 2, state.coins); 
-  assertEqual(originalState.handCount[currentPlayer] + 2, state.handCount[currentPlayer]); 
-
+  printf("\n >>>>> Unit Test 3 SUCCESS: Testing complete %s <<<<<\n\n", TESTCARD);
   return 0;
 }
 

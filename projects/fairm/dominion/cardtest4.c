@@ -23,10 +23,10 @@ int main() {
 	// initialize a game state and player cards
 
 	printf("----------------- Testing Card: %s ----------------\n", TESTCARD);
-  // ----------- TEST 1: --------------
-	printf("TEST 1: Correctly gets single winner\n");
+  // ----------- TEST 2: --------------
+	printf("TEST 2: Correctly gets single winner\n");
 	memcpy(&state, &originalState, sizeof(struct gameState));
-  val = getWinners(players, &state);
+  val = getWinners(&players, &state);
 
   assertEqual(players[0], 0);
   assertEqual(players[1], 0);
@@ -37,7 +37,10 @@ int main() {
   // ----------- TEST 2: --------------
 	printf("TEST 1: Correctly gets two winners\n");
 	memcpy(&state, &originalState, sizeof(struct gameState));
+  players[0] = 3;
   players[1] = 6;
+  players[2] = 6;
+  players[3] = 5;
   val = getWinners(players, &state);
 
   assertEqual(players[0], 0);
@@ -50,6 +53,10 @@ int main() {
 	printf("TEST 3: adjusts scores based on turn\n");
 	memcpy(&state, &originalState, sizeof(struct gameState));
   state.whoseTurn = 1;
+  players[0] = -33;
+  players[1] = 6;
+  players[2] = 6;
+  players[3] = 5;
   val = getWinners(players, &state);
 
   assertEqual(players[0], 0);
